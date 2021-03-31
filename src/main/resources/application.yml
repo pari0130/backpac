@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev # 기본 환경 선택
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+  jwt:
+    secret: jd.test!@#amp;
+
+logging:
+  level:
+    root: INFO # 기본 로그레벨
+
+server:
+  port: ${port:8080} #port 중복 시 port 번호 변경
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 120m

@@ -1,0 +1,55 @@
+user:
+  loginSuccess:
+    code: "1000"
+    mse: "로그인 성공 하였습니다."
+  loginFail:
+    code: "1001"
+    msg: "로그인 실패 하였습니다. 아이디 혹은 비밀번호를 확인해주세요."
+  logoutSuccess:
+    code: "1002"
+    msg: "로그아웃 되었습니다."
+  authCreated:
+    code: "1003"
+    msg: "회원가입에 성공 하였습니다."
+  authUpdate:
+    code: "1004"
+    msg: "회원정보 수정에 성공 하였습니다."
+  authDelete:
+    code: "1005"
+    msg: "회원 탈퇴 되었습니다."
+  authFaileName:
+    code: "1006"
+    msg: "회원가입에 실패하였습니다. 이름은 한글(10자), 영문(20자) 대소문자만 허용 됩니다."
+  authFaileNik:
+    code: "1007"
+    msg: "회원가입에 실패하였습니다. 별명은 영문(30자) 소문자만 허용 됩니다."
+  authFailePw:
+    code: "1008"
+    msg: "회원가입에 실패하였습니다. 비밀번호는 최소 10자 이상의 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함 하여야 합니다."
+  authFaileTel:
+    code: "1009"
+    msg: "회원가입에 실패하였습니다. 전화번호는 숫자(20자) 만 허용 됩니다."
+  authFaileEmail:
+    code: "1010"
+    msg: "회원가입에 실패하였습니다. 이메일(100자) 형식을 다시 확인해주세요."
+  notFound:
+    code: "1011"
+    msg: "회원정보를 찾을 수 없습니다."
+
+product:
+  notFound:
+    code: "2000"
+    msg: "상품 정보를 찾을 수 없습니다."
+
+exception:
+  tokenFail:
+    code: "3001"
+    mas: "AUTH 토큰 정보를 다시 확인해주세요."
+  denied:
+    code: "3002"
+    msg: "비정상적인 접근입니다."
+
+common:
+  notFound:
+    code: "9000"
+    msg: "검색 정보를 찾을 수 없습니다."
