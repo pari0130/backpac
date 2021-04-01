@@ -1,4 +1,4 @@
-package com.task.backpac.controller.product;
+package com.task.backpac.controller.v1.product;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
