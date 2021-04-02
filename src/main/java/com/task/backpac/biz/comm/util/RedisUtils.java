@@ -48,18 +48,4 @@ public class RedisUtils {
     }
 }
 
-//public void test() {
-//    //get/set을 위한 객체
-//    ValueOperations<String, Object> vop = redisTemplate.opsForValue();
-//    //자료형 생성
-//    DataData setData = new DataData();
-//    setData.setItemId("jeong");
-//    setData.setSourceId("pro");
-//    //set
-//    vop.set("key", setData);
-//    DataData getData = (DataData) vop.get("key");
-//    System.out.println(getData.getItemId());//jeong
-//    System.out.println(getData.getSourceId());//pro
-//}
-
 
