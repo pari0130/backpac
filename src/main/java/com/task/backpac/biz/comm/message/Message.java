@@ -2,8 +2,6 @@ package com.task.backpac.biz.comm.message;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
 
 @Data
 public class Message {
@@ -12,7 +10,7 @@ public class Message {
     private boolean success = true;
 
     @ApiModelProperty(value = "응답 코드 번호")
-    private int code;
+    private String code;
 
     @ApiModelProperty(value = "응답 메시지")
     private String msg;

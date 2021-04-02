@@ -4,10 +4,22 @@ spring:
   config:
     activate:
       on-profile: prod
-  data:
-    mongodb:
-      uri: mongodb://open.jinotech.com:32017
-      database:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://112.166.159.199:53306/task?characterEncoding=UTF-8&serverTimezone=UTC
+      username: task
+      password: Task!234
+      poolName: HikariCP
+      connection-test-query : SELECT NOW() FROM dual
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none # 시작 할때 h2에 있는 테이블 데이터를 삭제 후 다시 생성하는 옵션
+    generate-ddl: true
+    database: mysql
+
 logging:
   file:
     name: logs/application-debug.log

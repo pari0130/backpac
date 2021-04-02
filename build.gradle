@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
 }
 
@@ -8,11 +9,7 @@ group = 'com.task'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+def querydslSrcDir = "src/main/java/generated"
 
 repositories {
     mavenCentral()
@@ -26,10 +23,17 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // QueryDSL
+    implementation "com.querydsl:querydsl-apt:4.1.3" // Querydsl 관련 코드(ex: QHello) 생성 기능 제공
+    implementation "com.querydsl:querydsl-jpa:4.1.3" // Querydsl JPA 관련 기능 제공
+    implementation "com.querydsl:querydsl-sql:4.1.3" // Querydsl JPA 관련 기능 제공
+
+    // db
+    compile 'com.zaxxer:HikariCP:3.4.5'
+    compile 'mysql:mysql-connector-java'
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -44,6 +48,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.google.code.gson:gson'
 
+    // jwt
+    implementation "io.jsonwebtoken:jjwt:0.9.1"
+
     // etc
     implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'org.apache.httpcomponents:httpclient'
@@ -51,6 +58,39 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+}
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+clean {
+    delete file(querydslSrcDir)
 }
 
 test {

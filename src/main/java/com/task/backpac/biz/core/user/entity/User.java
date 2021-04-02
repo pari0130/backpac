@@ -1,21 +1,27 @@
 package com.task.backpac.biz.core.user.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Builder
 @Getter
 @Setter
-@Builder
 @Entity
+@Table(name = "user")
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+public class User implements UserDetails {
     /*
     user pk long 숫자증가 자동
-
     이름 20 한글, 영문 대소문자만 허용
     별명 30 영문 소문자만 허용
     비밀번호 최소 10자 이상 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함
@@ -23,10 +29,76 @@ public class User {
     이메일 100 이메일형식
     성별 옵셔널 1
     */
-    @Id // 해당 테이블의 PK 필드를 나타냅니다.
-    @GeneratedValue(strategy = GenerationType.IDENTITY)// PK의 생성 규칙을 나타냅니다. 기본값은 AUTO 로, MySQL의 auto_increment와 같이 자동증가하는 정수형 값이 됩니다.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "bigint", unique = true, nullable = false)
     private Long userNo;
 
-    @Column(name="USER_ID", columnDefinition = "bigint",  unique = true, nullable = false)
-    private Long userId;
+    @Column(length = 100, unique = true, nullable = false)
+    private String userEmail;
+
+    @Column(length = 20, nullable = false)
+    private String userName;
+
+    @Column(length = 30, nullable = false)
+    private String userNic;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
+    private String userPw;
+
+    @Column(length = 20, nullable = false)
+    private String userPhone;
+
+    @Column(length = 5)
+    private String userGender;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getPassword() {
+        return this.userPw;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getUsername() {
+        return this.userEmail;
+    }
+
+    // 계정 만료 여부
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // 계정 잠금 여부
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    // 패스워드 만료 여부
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    // 계정 사용 가능 여부
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
