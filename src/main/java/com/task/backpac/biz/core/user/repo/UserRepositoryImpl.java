@@ -1,7 +1,9 @@
 package com.task.backpac.biz.core.user.repo;
 
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.task.backpac.biz.core.user.dto.UserDto;
+import com.task.backpac.biz.core.user.entity.QUser;
 import com.task.backpac.biz.core.user.entity.User;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -42,5 +45,20 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .build();
 
         return userJPARepository.save(user);
+    }
+
+    @Override
+    public User getUserByUid(String email) {
+        QUser user = QUser.user;
+
+        JPAQuery<User> query = queryFactory.selectFrom(user)
+                .where(user.userEmail.eq(email));
+
+        return query.fetchOne();
+    }
+
+    @Override
+    public Optional<User> getUserByUserNo(Long userNo) {
+        return userJPARepository.findById(userNo);
     }
 }

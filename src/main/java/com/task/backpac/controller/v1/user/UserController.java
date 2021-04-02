@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Api(tags = {"01. 회원관리"})
 @RestController
 @RequiredArgsConstructor
@@ -43,15 +45,15 @@ public class UserController{
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
-    public Object signup(UserDto userDto) {
-        return response.single(userService.insertUser(userDto), lang.getCode("user.authCreated.code"), lang.getMessage("user.authCreated.code"));
+    public Object signup(@Valid UserDto userDto) {
+        return response.single(userService.insertUser(userDto), lang.getCode("user.authCreated.code"), lang.getMessage("user.authCreated.msg"));
     }
 
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 //    })
     @ApiOperation(value = "회원 리스트 조회", notes = "모든 회원을 조회한다")
-    @GetMapping("/users")
+    @GetMapping("/list")
     public Object getUsers() {
         return response.list(null, "", "");
     }
@@ -59,9 +61,9 @@ public class UserController{
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 //    })
-    @ApiOperation(value = "회원 단건 조회", notes = "회원번호로 회원을 조회한다")
-    @GetMapping("/user")
-    public Object getUser() {
-        return response.single(null, "", "");
+    @ApiOperation(value = "회원 단건 조회", notes = "회원 이메일 정보로 회원을 조회한다")
+    @GetMapping("/detail")
+    public Object getUser(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String userId) {
+        return response.single(userService.getUserByUid(userId), "", "");
     }
 }
