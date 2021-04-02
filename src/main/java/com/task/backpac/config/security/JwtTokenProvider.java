@@ -1,10 +1,14 @@
 package com.task.backpac.config.security;
 
+import com.task.backpac.biz.comm.util.ObjectUtil;
+import com.task.backpac.biz.comm.util.RedisUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,18 +18,18 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
     private final UserDetailsService userDetailsService;
+    private final RedisUtils redisUtils;
 
     @PostConstruct
     protected void init() {
@@ -38,12 +42,17 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         claims.put("roles", roles);
         Date now = new Date();
         long tokenValidMilisecond = 1000L * 60 * 60 * 24; // 24시간
-        return Jwts.builder()
+
+        String token = Jwts.builder()
                 .setClaims(claims) // 데이터
                 .setIssuedAt(now) // 토큰 발행일자
                 .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // expire
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+
+        this.putTokenToRedis(userPk, token, tokenValidMilisecond);
+
+        return token;
     }
 
     // 토큰으로 인증정보 조회
@@ -70,6 +79,36 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // jwt 토큰 만료 체크를 위한 redis 저장
+    public void putTokenToRedis(String userPk, String token, long tokenValidMilisecond){
+        Map<String, Object> cacheMap = new HashMap<>();
+        cacheMap.put("userId", userPk);
+        cacheMap.put("token", token);
+
+        redisUtils.put("JWT_TOKEN::" + userPk, cacheMap, tokenValidMilisecond);
+
+        Map<String, Object> redisMap = ObjectUtil.convertObjToMap(redisUtils.get("JWT_TOKEN::" + userPk));
+
+        if(redisMap != null){
+            log.info("redis userId : " + redisMap.get("userId"));
+            log.info("redis token : " + redisMap.get("token"));
+        }
+    }
+
+    public boolean validateTokenFromRedis(String token){
+        String userPk = this.getUserPk(token);
+
+        Map<String, Object> redisMap = ObjectUtil.convertObjToMap(redisUtils.get("JWT_TOKEN::" + userPk));
+
+        if(redisMap != null && token.equals(MapUtils.getString(redisMap, "token"))){
+            log.info("redis userId : " + redisMap.get("userId"));
+            log.info("redis token : " + redisMap.get("token"));
+            return true;
+        }
+
+        return false;
     }
 }
 

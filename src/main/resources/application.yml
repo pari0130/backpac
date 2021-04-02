@@ -7,8 +7,6 @@ spring:
   jwt:
     secret: backpac.task!@#amp;
 
-database : mysql
-
 logging:
   level:
     root: INFO # 기본 로그레벨

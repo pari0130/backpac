@@ -19,6 +19,9 @@ spring:
       ddl-auto: validate # 시작 할때 h2에 있는 테이블 데이터를 삭제 후 다시 생성하는 옵션
     generate-ddl: true
     database: mysql
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 logging:
   file:

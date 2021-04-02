@@ -17,13 +17,15 @@ spring:
     initialization-mode: always
     schema: classpath:db/mysql/schema.sql
     data: classpath:db/mysql/data.sql
-
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     generate-ddl: true
     database: mysql
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 logging:
   file:
