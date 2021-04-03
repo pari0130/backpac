@@ -1,23 +1,29 @@
 package com.task.backpac.biz.core.product.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.task.backpac.biz.comm.entity.CommonTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
+@Builder
 @Getter
 @Setter
 @Entity
-@Table(name="product")
+@Table(name = "product")
 @NoArgsConstructor
-public class Product {
-    /*
-    제품 pk
-    제품명 100 emoji 를 포함한 모든 문자
-    제품설명
-    * */
-    @Id // 해당 테이블의 PK 필드를 나타냅니다.
-    @GeneratedValue(strategy = GenerationType.IDENTITY)// PK의 생성 규칙을 나타냅니다. 기본값은 AUTO 로, MySQL의 auto_increment와 같이 자동증가하는 정수형 값이 됩니다.
+@AllArgsConstructor
+public class Product extends CommonTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "bigint", unique = true, nullable = false)
     private Long productId;
+
+    @Column(length = 100, nullable = false)
+    @Size(max=100, message = "{product.createfailName.msg}")
+    private String productName;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String productDesc;
 }

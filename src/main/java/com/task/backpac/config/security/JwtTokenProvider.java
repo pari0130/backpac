@@ -1,7 +1,7 @@
 package com.task.backpac.config.security;
 
 import com.task.backpac.biz.comm.util.ObjectUtil;
-import com.task.backpac.biz.comm.util.RedisUtils;
+import com.task.backpac.biz.comm.util.RedisUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -29,7 +29,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     private String secretKey;
 
     private final UserDetailsService userDetailsService;
-    private final RedisUtils redisUtils;
+    private final RedisUtil redisUtils;
 
     @PostConstruct
     protected void init() {

@@ -20,15 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
-    /*
-    user pk long 숫자증가 자동
-    이름 20 한글, 영문 대소문자만 허용
-    별명 30 영문 소문자만 허용
-    비밀번호 최소 10자 이상 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함
-    전화번호 20 숫자
-    이메일 100 이메일형식
-    성별 옵셔널 1
-    */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "bigint", unique = true, nullable = false)

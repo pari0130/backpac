@@ -6,6 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,6 +18,12 @@ import java.util.ResourceBundle;
 
 @Configuration
 public class MessageConfiguration implements WebMvcConfigurer {
+
+    @Value("${spring.messages.basename}")
+    String basename;
+
+    @Value("${spring.messages.encoding}")
+    String encoding;
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -38,10 +45,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public MessageSource messageSource(
-            @Value("${spring.messages.basename}") String basename,
-            @Value("${spring.messages.encoding}") String encoding
-    ) {
+    public MessageSource messageSource() {
         YamlMessageSource ms = new YamlMessageSource();
         ms.setBasename(basename);
         ms.setDefaultEncoding(encoding);
@@ -56,5 +60,12 @@ public class MessageConfiguration implements WebMvcConfigurer {
         protected ResourceBundle doGetBundle(String basename, Locale locale) {
             return ResourceBundle.getBundle(basename, locale, YamlResourceBundle.Control.INSTANCE);
         }
+    }
+
+    @Bean
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
     }
 }

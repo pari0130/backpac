@@ -1,25 +1,30 @@
 package com.task.backpac.biz.core.product.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.task.backpac.biz.comm.entity.CommonTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
 @Entity
-@Table(name="order")
+@Table(name = "user_order")
 @NoArgsConstructor
-public class Order {
-    /*
-    주문번호 12 중복이 불가능한 임의의 영문 대문자, 숫자 조합
-    제품 pk
-    주문자 user pk
-    결제일시  Datetime Timezone 을 고려한 시간 정보
-    * */
+@AllArgsConstructor
+public class Order extends CommonTimeEntity {
 
-    @Id // 해당 테이블의 PK 필드를 나타냅니다.
-    @GeneratedValue(strategy = GenerationType.IDENTITY)// PK의 생성 규칙을 나타냅니다. 기본값은 AUTO 로, MySQL의 auto_increment와 같이 자동증가하는 정수형 값이 됩니다.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "bigint", unique = true, nullable = false)
     private Long orderNo;
+
+    @Column(length = 12, unique = true, nullable = false)
+    private String orderId;
+
+    @Column(columnDefinition = "bigint", nullable = false)
+    private Long productId;
+
+    @Column(columnDefinition = "bigint", nullable = false)
+    private Long userNo;
 }

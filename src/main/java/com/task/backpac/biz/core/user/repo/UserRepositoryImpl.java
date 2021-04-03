@@ -32,7 +32,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
     }
 
     @Override
-    public User insertUser(UserDto userDto) {
+    public User insertUser(UserDto.Signin userDto) {
 
         User user = User.builder()
                 .userEmail(userDto.getUserEmail())

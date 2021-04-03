@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private final MulLangMessage lang;
 
     @Override
-    public User insertUser(UserDto userDto) {
+    public User insertUser(UserDto.Signin userDto) {
         return userRepository.insertUser(userDto);
     }
 
