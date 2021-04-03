@@ -52,6 +52,9 @@ VALUES(7, '음료', '미닛메이드 포도', '2021-04-03 05:03:23.251000000', '
 INSERT INTO task.product
 (product_id, product_desc, product_name, create_dt, update_dt)
 VALUES(8, '과자', '포카칩', '2021-04-03 11:58:07.853000000', '2021-04-03 11:58:07.853000000');
+INSERT INTO task.product
+(product_id, product_desc, product_name, create_dt, update_dt)
+VALUES(9, '과자', '빼빼로😆🥵', '2021-04-03 12:02:02.987000000', '2021-04-03 12:02:02.987000000');
 
 
 
