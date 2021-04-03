@@ -5,14 +5,19 @@ spring:
     activate:
       on-profile: stage
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
     hikari:
+      type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://112.166.159.199:53306/task?characterEncoding=UTF-8&serverTimezone=UTC
+      url: jdbc:mysql://112.166.159.199:53306/task?serverTimezone=UTC&useUnicode=true
       username: task
       password: Task!234
       poolName: HikariCP
       connection-test-query : SELECT NOW() FROM dual
+    platform: mysql # datasource 타입 플랫폼 정의
+  #    초기 데이터 설정이 필요할 경우 아래 주석 제거 필요
+  #    initialization-mode: always
+  #    schema: classpath:db/mysql/schema.sql
+  #    data: classpath:db/mysql/data.sql
   jpa:
     show-sql: true
     hibernate:
