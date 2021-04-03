@@ -19,7 +19,7 @@ user:
     msg: "회원 탈퇴 되었습니다."
   authFailName:
     code: "1006"
-    msg: "이름은 한글(10자), 영문(20자) 대소문자만 허용 됩니다."
+    msg: "이름은 한글, 영문 대소문자(20자) 만 허용 됩니다."
   authFailNik:
     code: "1007"
     msg: "별명은 영문(30자) 소문자만 허용 됩니다."
@@ -42,14 +42,28 @@ user:
 product:
   notFound:
     code: "2000"
-    msg: "상품 정보를 찾을 수 없습니다."
+    msg: "제품 정보를 찾을 수 없습니다."
+  createfailName:
+    code: "2001"
+    msg: "제품명은 100자 까지만 허용 됩니다."
+
+order:
+  notFound:
+    code: "3001"
+    msg: "주문 정보를 찾을 수 없습니다."
+  requiredProductId:
+    code: "3002"
+    msg: "확인하려는 제품 정보를 입력해주세요."
+  requiredOrderId:
+    code: "3003"
+    msg: "확인하려는 주문 정보를 입력해주세요."
 
 exception:
   tokenFail:
-    code: "3001"
+    code: "8001"
     mas: "AUTH 토큰 정보를 다시 확인해주세요."
   denied:
-    code: "3002"
+    code: "8002"
     msg: "비정상적인 접근입니다."
 
 common:
