@@ -1,4 +1,4 @@
-package com.jino.sjcu.common.config;
+package com.task.backpac.config.cache;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

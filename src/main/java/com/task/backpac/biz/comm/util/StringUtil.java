@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2012 CORE BUILDER
- * All right reserved.
- */
 package com.task.backpac.biz.comm.util;
 
 import lombok.extern.slf4j.Slf4j;

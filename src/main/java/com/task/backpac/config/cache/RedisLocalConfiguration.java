@@ -1,4 +1,4 @@
-package com.task.backpac.config.cache;//package com.jino.sjcu.common.config;
+package com.task.backpac.config.cache;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

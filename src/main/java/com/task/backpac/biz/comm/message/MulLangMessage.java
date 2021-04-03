@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2015 jinotech Co., Ltd
- * All right reserved.
- */
 package com.task.backpac.biz.comm.message;
 
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2014 jinotech Co., Ltd
- * All right reserved.
- */
 package com.task.backpac.biz.comm.exception;
 
 /**
