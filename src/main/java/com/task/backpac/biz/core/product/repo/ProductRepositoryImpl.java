@@ -53,13 +53,17 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
     }
 
     @Override
-    public List<ProductDto> selectListProduct() {
+    public Page<ProductDto> selectListProduct(Pageable pageable) {
 
         QProduct qProduct = QProduct.product;
 
         JPAQuery<ProductDto> query = new JPAQuery<ProductDto>(entityManager);
 
-        return query.from(qProduct).fetch();
+        query.from(qProduct);
+
+        List<ProductDto> paging = getQuerydsl().applyPagination(pageable, query).fetch();
+
+        return new PageImpl<>(paging, pageable, query.fetchCount());
     }
 
     @Override

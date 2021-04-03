@@ -44,4 +44,27 @@ public class UserDto {
         @Pattern(regexp="[mf]", message = "{user.authFailGender.msg}")
         private String userGender;
     }
+
+    @Builder
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Res {
+
+        @ApiModelProperty(value = "회원 이메일", required = true)
+        private String userEmail;
+
+        @ApiModelProperty(value = "회원 이름", required = true)
+        private String userName;
+
+        @ApiModelProperty(value = "회원 별명", required = true)
+        private String userNic;
+
+        @ApiModelProperty(value = "회원 전화번호", required = true)
+        private String userPhone;
+
+        @ApiModelProperty(value = "회원 성별", required = false)
+        private String userGender;
+    }
 }

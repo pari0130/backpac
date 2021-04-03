@@ -5,6 +5,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.task.backpac.biz.core.user.dto.UserDto;
 import com.task.backpac.biz.core.user.entity.QUser;
 import com.task.backpac.biz.core.user.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -60,5 +64,19 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
     @Override
     public Optional<User> getUserByUserNo(Long userNo) {
         return userJPARepository.findById(userNo);
+    }
+
+    @Override
+    public Page<UserDto.Res> selectUsers(Pageable pageable) {
+
+        QUser qUser = QUser.user;
+
+        JPAQuery<UserDto.Res> query = new JPAQuery<UserDto.Res>(entityManager);
+
+        query.from(qUser);
+
+        List<UserDto.Res> paging = getQuerydsl().applyPagination(pageable, query).fetch();
+
+        return new PageImpl<>(paging, pageable, query.fetchCount());
     }
 }

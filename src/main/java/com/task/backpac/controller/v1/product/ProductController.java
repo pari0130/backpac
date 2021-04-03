@@ -28,7 +28,7 @@ public class ProductController {
     })
     @ApiOperation(value = "제품 저장", notes = "신규 제품 정보를 저장한다.")
     @PostMapping(value = "/products")
-    public Object setProduct(ProductDto productDto) {
+    public Object setProducts(ProductDto productDto) {
         return response.single(productService.insertProduct(productDto), "", "");
     }
 
@@ -37,16 +37,20 @@ public class ProductController {
     })
     @ApiOperation(value = "제품 조회", notes = "제품 전체 정보를 조회한다.")
     @GetMapping(value = "/products")
-    public Object getProduct() {
-        return response.list(productService.selectListProduct(), "", "");
+    public Object getProducts(@ApiParam(value = "페이지 번호", required = true) @RequestParam(defaultValue = "0") int page,
+                              @ApiParam(value = "페이지 로우 사이즈", required = true) @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return response.page(productService.selectListProduct(pageable), "", "");
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "주문 정보 입력", notes = "제품 주문 정보를 입력한다.")
-    @PostMapping(value = "/order")
-    public Object setOrder(@ApiParam(value = "주문자 회원 번호", required = true) @RequestParam Long userNo,
+    @PostMapping(value = "/orders")
+    public Object setOrders(@ApiParam(value = "주문자 회원 번호", required = true) @RequestParam Long userNo,
                            @ApiParam(value = "주문 상품 번호", required = true) @RequestParam Long productId) {
 
         OrderDto.Req orderDto = new OrderDto.Req();
@@ -60,8 +64,8 @@ public class ProductController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "단일 회원의 주문 목록 조회", notes = "단일 회원의 주문 목록을 조회한다.")
-    @GetMapping(value = "/order")
-    public Object getOrder(@ApiParam(value = "주문자 회원 번호", required = true) @RequestParam Long userNo) {
+    @GetMapping(value = "/orders/{userNo}")
+    public Object getOrders(@ApiParam(value = "주문자 회원 번호", required = true) @PathVariable Long userNo) {
 
         OrderDto.Req orderDto = new OrderDto.Req();
         orderDto.setUserNo(userNo);
@@ -73,8 +77,8 @@ public class ProductController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "여러 회원의 주문 목록 조회", notes = "여러 회원의 주문 목록을 조회한다.")
-    @GetMapping(value = "/order/page")
-    public Object getOrderPage(@ApiParam(value = "페이지 번호", required = true) @RequestParam(defaultValue = "0") int page,
+    @GetMapping(value = "/orders")
+    public Object getOrdersPage(@ApiParam(value = "페이지 번호", required = true) @RequestParam(defaultValue = "0") int page,
                                @ApiParam(value = "페이지 로우 사이즈", required = true) @RequestParam(defaultValue = "10") int size,
                            OrderDto.UserOrderReq orderReq) {
 

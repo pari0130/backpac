@@ -2,6 +2,8 @@ package com.task.backpac.biz.core.user.repo;
 
 import com.task.backpac.biz.core.user.dto.UserDto;
 import com.task.backpac.biz.core.user.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -39,4 +41,14 @@ public interface UserRepository {
      * @Description
      */
     Optional<User> getUserByUserNo(Long userNo);
+
+    /**
+     * @Purpose : 저장된 모든 사용자 정보 조회
+     * @Method Name : selectUsers
+     * @Author : 조동휘
+     * @Date : 2021-04-03
+     * @Return : Page<UserDto.Res>
+     * @Description
+     */
+    Page<UserDto.Res> selectUsers(Pageable pageable);
 }

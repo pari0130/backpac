@@ -8,6 +8,8 @@ import com.task.backpac.biz.core.user.repo.UserRepository;
 import com.task.backpac.biz.core.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
+    }
+
+    @Override
+    public User getUserByUserNo(String userNo) {
+        return userRepository.getUserByUserNo(Long.valueOf(userNo)).orElseThrow(() -> new BaseException(lang.getMessage("user.notFound.msg")));
+    }
+
+    @Override
+    public Page<UserDto.Res> selectUsers(Pageable pageable) {
+        return userRepository.selectUsers(pageable);
     }
 
     @Override

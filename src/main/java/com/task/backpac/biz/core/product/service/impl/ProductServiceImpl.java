@@ -30,8 +30,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> selectListProduct() {
-        return productRepository.selectListProduct();
+    public Page<ProductDto> selectListProduct(Pageable pageable) {
+        return productRepository.selectListProduct(pageable);
     }
 
     @Override

@@ -29,10 +29,10 @@ public interface ProductRepository {
      * @Method Name : selectListProduct
      * @Author : 조동휘
      * @Date : 2021-04-03
-     * @Return : List<ProductDto>
+     * @Return : Page<ProductDto>
      * @Description
      */
-    List<ProductDto> selectListProduct();
+    Page<ProductDto> selectListProduct(Pageable pageable);
 
     /**
      * @Purpose : 사용자가 제품 주문
