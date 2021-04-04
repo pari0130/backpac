@@ -6,7 +6,6 @@ spring:
       on-profile: prod
   datasource:
     hikari:
-      type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://112.166.159.199:53306/task?serverTimezone=UTC&useUnicode=true
       username: task
@@ -21,7 +20,7 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: none # 시작 할때 h2에 있는 테이블 데이터를 삭제 후 다시 생성하는 옵션
+      ddl-auto: none
     generate-ddl: true
     database: mysql
   redis:

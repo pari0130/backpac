@@ -22,8 +22,6 @@ public interface ProductRepository {
      */
     Product insertProduct(ProductDto dto);
 
-    //ProductDto selectProduct(ProductDto dto);
-
     /**
      * @Purpose : 제품 전체 목록 조회
      * @Method Name : selectListProduct

@@ -6,7 +6,6 @@ spring:
       on-profile: dev
   datasource:
     hikari:
-      type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://112.166.159.199:53306/task?serverTimezone=UTC&useUnicode=true
       username: task

@@ -23,7 +23,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
+public class JwtTokenProvider {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
@@ -41,7 +41,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         Claims claims = Jwts.claims().setSubject(userPk);
         claims.put("roles", roles);
         Date now = new Date();
-        long tokenValidMilisecond = 1000L * 60 * 60 * 24; // 24시간
+        long tokenValidMilisecond = 1000L * 60 * 60 * 24;
 
         String token = Jwts.builder()
                 .setClaims(claims) // 데이터
@@ -92,8 +92,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         Map<String, Object> redisMap = ObjectUtil.convertObjToMap(redisUtils.get("JWT_TOKEN::" + userPk));
 
         if(redisMap != null){
-            log.info("redis userId : " + redisMap.get("userId"));
-            log.info("redis token : " + redisMap.get("token"));
+            log.info("putRedis redis userId : " + redisMap.get("userId"));
+            log.info("putRedis redis token : " + redisMap.get("token"));
         }
     }
 
@@ -103,8 +103,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         Map<String, Object> redisMap = ObjectUtil.convertObjToMap(redisUtils.get("JWT_TOKEN::" + userPk));
 
         if(redisMap != null && token.equals(MapUtils.getString(redisMap, "token"))){
-            log.info("redis userId : " + redisMap.get("userId"));
-            log.info("redis token : " + redisMap.get("token"));
+            log.info("validate redis userId : " + redisMap.get("userId"));
+            log.info("validate redis token : " + redisMap.get("token"));
             return true;
         }
 

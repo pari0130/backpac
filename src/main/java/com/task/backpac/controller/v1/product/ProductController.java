@@ -1,6 +1,5 @@
 package com.task.backpac.controller.v1.product;
 
-import com.task.backpac.biz.comm.message.MulLangMessage;
 import com.task.backpac.biz.core.product.dto.OrderDto;
 import com.task.backpac.biz.core.product.dto.ProductDto;
 import com.task.backpac.biz.core.product.service.ProductService;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ProductController {
 
-    private final MulLangMessage lang;
     private final ResponseController response;
     private final ProductService productService;
 
