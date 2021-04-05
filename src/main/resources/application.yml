@@ -12,7 +12,7 @@ logging:
     root: INFO # 기본 로그레벨
 
 server:
-  port: ${port:8080} #port 중복 시 port 번호 변경
+  port: ${port:8081} #port 중복 시 port 번호 변경
   servlet:
     session:
       tracking-modes: cookie

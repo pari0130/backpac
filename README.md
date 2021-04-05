@@ -6,7 +6,7 @@
 2. 설정 : yaml
 3. 빌드 : gradle-6.8.3
 4. 테스트 DB : mysql  Ver 14.14 Distrib 5.7.33, for Linux (x86_64) 
-5. 스웨거 API DOC : swagger-ui:2.9.2 ( http://localhost:8080/swagger-ui.html )
+5. 스웨거 API DOC : swagger-ui:2.9.2 ( http://localhost:8081/swagger-ui.html )
 6. 사용기술
     - Springboot restful api
     - swagger doc 
