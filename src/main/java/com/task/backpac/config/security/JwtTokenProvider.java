@@ -95,6 +95,8 @@ public class JwtTokenProvider {
             log.info("putRedis redis userId : " + redisMap.get("userId"));
             log.info("putRedis redis token : " + redisMap.get("token"));
         }
+        cacheMap = null;
+        redisMap = null;
     }
 
     public boolean validateTokenFromRedis(String token){
@@ -107,7 +109,7 @@ public class JwtTokenProvider {
             log.info("validate redis token : " + redisMap.get("token"));
             return true;
         }
-
+        redisMap = null;
         return false;
     }
 }
