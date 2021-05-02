@@ -7,7 +7,7 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://112.166.159.199:53306/task?serverTimezone=UTC&useUnicode=true
+      url: jdbc:mysql://0.0.0.0:53306/task?serverTimezone=Asia/Seoul&useUnicode=true
       username: task
       password: Task!234
       poolName: HikariCP

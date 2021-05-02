@@ -1,9 +1,9 @@
 package com.task.backpac.controller.response;
 
-import com.mysql.cj.util.StringUtils;
 import com.task.backpac.biz.comm.message.Message;
 import com.task.backpac.biz.comm.message.MulLangMessage;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ public class ResponseController {
      * @Description :
      */
     private void setSuccessMessage(Message message, boolean success, String code, String msg) {
-        if(StringUtils.isNullOrEmpty(code)){
+        if(StringUtils.isEmpty(code)){
             code = lang.getCode("common.success.code");
         }
-        if(StringUtils.isNullOrEmpty(msg)){
+        if(StringUtils.isEmpty(msg)){
             msg = lang.getMessage("common.success.msg");
         }
         message.setSuccess(success);
@@ -46,10 +46,10 @@ public class ResponseController {
      * @Description :
      */
     private void setFailMessage(Message message, boolean success, String code, String msg) {
-        if(StringUtils.isNullOrEmpty(code)){
+        if(StringUtils.isEmpty(code)){
             code = lang.getCode("common.fail.code");
         }
-        if(StringUtils.isNullOrEmpty(msg)){
+        if(StringUtils.isEmpty(msg)){
             msg = lang.getMessage("common.fail.msg");
         }
         message.setSuccess(success);

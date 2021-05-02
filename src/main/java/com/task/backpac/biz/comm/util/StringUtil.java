@@ -8,7 +8,7 @@ import java.util.Random;
 
 @Slf4j
 @Component
-public class StringUtil extends StringUtils {
+public class StringUtil {
 
     /**
      * @Purpose : random key size length 만큼 생성해서 return
@@ -24,13 +24,13 @@ public class StringUtil extends StringUtils {
 				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
 				'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-		Random rd = new Random();
+		Random r = new Random();
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < size; i++) {
-			char ch = chars[rd.nextInt(chars.length)];
+			char ch = chars[r.nextInt(chars.length)];
 			sb.append(ch);
 		}
-
+		r = null;
 		return sb.toString();
     }
 }
