@@ -63,4 +63,30 @@ public interface UserService extends UserDetailsService {
      * @Description
      */
     Page<UserDto.Res> selectUsers(Pageable pageable);
+
+    /**
+     * @Purpose : 사용자 이메일 정보 카운트
+     * @Method Name : getEmailCount
+     * @Author : 조동휘
+     * @Date : 2021-06-30
+     * @param email : 사용자 이메일 정보
+     * @Return : String
+     * @Description
+     */
+    Integer getEmailCount(String email);
+
+    /**
+     * @Purpose : 사용자 이메일 아이디 검색
+     * @Method Name : getUserEmail
+     * @Author : 조동휘
+     * @Date : 2021-06-30
+     * @param phone : 사용자 이메일 정보
+     * @Return : String
+     * @Description
+     */
+    String getUserEmail(String phone);
+
+    String resetPassword(String email);
+
+    Boolean updatePassword(String email, String password);
 }

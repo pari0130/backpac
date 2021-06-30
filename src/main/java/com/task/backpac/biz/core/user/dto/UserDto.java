@@ -50,6 +50,20 @@ public class UserDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class ResetPw {
+        @ApiModelProperty(value = "회원 이메일", required = true)
+        private String userEmail;
+
+        @ApiModelProperty(value = "회원 비밀번호(영문 대문자, 소문자, 특수문자, 숫자 각1자 이상 최소 10자 이상)", required = true)
+        @Pattern(regexp="^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{10,}$", message = "{user.authFailPw.msg}")
+        private String userPw;
+    }
+
+    @Builder
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Res {
 
         @ApiModelProperty(value = "회원 이메일", required = true)
@@ -66,5 +80,8 @@ public class UserDto {
 
         @ApiModelProperty(value = "회원 성별", required = false)
         private String userGender;
+
+        @ApiModelProperty(value = "토큰", required = false)
+        private String userToken;
     }
 }

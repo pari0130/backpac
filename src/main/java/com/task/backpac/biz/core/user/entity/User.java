@@ -45,6 +45,10 @@ public class User implements UserDetails {
     @Column(length = 5)
     private String userGender;
 
+    public String getUserRealName() {
+        return this.userName;
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

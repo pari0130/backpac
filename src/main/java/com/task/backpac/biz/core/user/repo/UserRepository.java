@@ -1,5 +1,6 @@
 package com.task.backpac.biz.core.user.repo;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.task.backpac.biz.core.user.dto.UserDto;
 import com.task.backpac.biz.core.user.entity.User;
 import org.springframework.data.domain.Page;
@@ -51,4 +52,39 @@ public interface UserRepository {
      * @Description
      */
     Page<UserDto.Res> selectUsers(Pageable pageable);
+
+    /**
+     * @Purpose : 사용자 이메일 정보 카운트
+     * @Method Name : getEmailCount
+     * @Author : 조동휘
+     * @Date : 2021-06-30
+     * @param email : 사용자 이메일 정보
+     * @Return : String
+     * @Description
+     */
+    Integer getEmailCount(String email);
+
+    /**
+     * @Purpose : 사용자 폰번호 정보 카운트
+     * @Method Name : getPhoneCount
+     * @Author : 조동휘
+     * @Date : 2021-06-30
+     * @param phone : 사용자 폰번호 정보
+     * @Return : String
+     * @Description
+     */
+    Integer getPhoneCount(String phone);
+
+    /**
+     * @Purpose : 사용자 이메일 아이디 검색
+     * @Method Name : getUserEmail
+     * @Author : 조동휘
+     * @Date : 2021-06-30
+     * @param phone : 사용자 번호 정보
+     * @Return : String
+     * @Description
+     */
+    String getUserEmail(String phone);
+
+    Boolean updatePassword(String email, String password);
 }

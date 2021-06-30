@@ -2,6 +2,8 @@ package com.task.backpac.biz.core.user.repo;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.task.backpac.biz.core.product.dto.ProductDto;
+import com.task.backpac.biz.core.product.entity.QProduct;
 import com.task.backpac.biz.core.user.dto.UserDto;
 import com.task.backpac.biz.core.user.entity.QUser;
 import com.task.backpac.biz.core.user.entity.User;
@@ -78,5 +80,53 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
         List<UserDto.Res> paging = getQuerydsl().applyPagination(pageable, query).fetch();
 
         return new PageImpl<>(paging, pageable, query.fetchCount());
+    }
+
+    @Override
+    public Integer getEmailCount(String email) {
+        QUser user = QUser.user;
+
+        JPAQuery<User> query = queryFactory.selectFrom(user)
+                .where(user.userEmail.eq(email));
+
+        return query.fetchOne() == null ? 0 : 1 ;
+    }
+
+    @Override
+    public Integer getPhoneCount(String phone) {
+        QUser user = QUser.user;
+
+        JPAQuery<User> query = queryFactory.selectFrom(user)
+                .where(user.userPhone.eq(phone));
+
+        return query.fetchOne() == null ? 0 : 1 ;
+    }
+
+    @Override
+    public String getUserEmail(String phone) {
+        QUser user = QUser.user;
+
+        JPAQuery<User> query = queryFactory.selectFrom(user)
+                .where(user.userPhone.eq(phone));
+
+        User userInfo = query.fetchOne();
+
+        if(userInfo == null){
+            return "";
+        }else{
+            return userInfo.getUserEmail();
+        }
+    }
+
+    @Override
+    public Boolean updatePassword(String email, String password) {
+        QUser qUser = QUser.user;
+
+        long updated = queryFactory.update(qUser)
+                .where(qUser.userEmail.eq(email))
+                .set(qUser.userPw, passwordEncoder.encode(password))
+                .execute();
+
+        return updated > 0;
     }
 }

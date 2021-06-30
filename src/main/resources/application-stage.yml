@@ -7,9 +7,9 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://0.0.0.0:53306/task?serverTimezone=Asia/Seoul&useUnicode=true
-      username: task
-      password: Task!234
+      url: jdbc:mysql://3.129.218.182:3306/dev?serverTimezone=Asia/Seoul&useUnicode=true
+      username: devuser
+      password: devuser!234
       poolName: HikariCP
       connection-test-query : SELECT NOW() FROM dual
     platform: mysql # datasource 타입 플랫폼 정의
